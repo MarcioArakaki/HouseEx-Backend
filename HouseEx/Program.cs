@@ -10,7 +10,9 @@ builder.Services.AddCors(options =>
     options.AddDefaultPolicy(
         policy =>
         {
-            policy.WithOrigins("*");
+            policy.WithOrigins("*")
+            .AllowAnyMethod()
+            .AllowAnyHeader();
         });
 });
 
@@ -21,7 +23,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContextPool<HouseExContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("HouseExDatabase")));
 
-builder.Services.AddScoped<IHouseExRepository,HouseExRepository>();
+builder.Services.AddScoped<IHouseExRepository, HouseExRepository>();
 
 var app = builder.Build();
 
@@ -31,11 +33,12 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+
 }
 
-app.UseHttpsRedirection();
-
 app.UseCors();
+
+app.UseHttpsRedirection();
 
 app.UseAuthorization();
 

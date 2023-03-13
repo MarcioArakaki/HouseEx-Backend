@@ -34,6 +34,21 @@ namespace HouseEx.Controllers
 
             return expense;
         } 
+
+        [HttpPut("{id}")]
+        public async Task<ActionResult<Expense>> Put(int id, Expense expense)
+        {
+
+            this.houseExRepository.UpdateExpense(id,expense);
+            
+            return expense;
+        } 
+
+        [HttpPost]
+        public async Task<ActionResult<Expense>> Post(Expense expense)
+        {
+            return await this.houseExRepository.CreateExpense(expense);
+        } 
     }
 
     

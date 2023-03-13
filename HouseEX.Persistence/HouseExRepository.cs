@@ -6,6 +6,8 @@ namespace HouseEX.Persistence
     {
         IEnumerable<User> GetUsers();
         IEnumerable<Expense> GetExpenses();
+        void UpdateExpense(int id, Expense expense);
+        Task<Expense> CreateExpense(Expense expense);
     }
 
     public class HouseExRepository : IHouseExRepository
@@ -27,5 +29,23 @@ namespace HouseEX.Persistence
             return context.Expenses;
         }
 
+        public void UpdateExpense(int id, Expense expense)
+        {
+            var expenseToUpdate = context.Expenses.FirstOrDefault(x => x.Id == id);
+
+            if (expenseToUpdate is null) return;
+
+            context.Entry(expenseToUpdate).CurrentValues.SetValues(expense);
+
+            context.SaveChanges();
+        }
+
+        public async Task<Expense> CreateExpense(Expense expense)
+        {
+            var entitiy = await context.Expenses.AddAsync(expense);
+            await context.SaveChangesAsync();
+
+            return entitiy.Entity;
+        }
     }
 }
