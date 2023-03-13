@@ -9,4 +9,5 @@ public class HouseExContext : DbContext
     }
     
     public DbSet<User> Users { get; set; } = null!;
+    public DbSet<Expense> Expenses { get; set; } = null!;
 }

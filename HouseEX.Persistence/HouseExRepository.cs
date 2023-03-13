@@ -5,6 +5,7 @@ namespace HouseEX.Persistence
     public interface IHouseExRepository
     {
         IEnumerable<User> GetUsers();
+        IEnumerable<Expense> GetExpenses();
     }
 
     public class HouseExRepository : IHouseExRepository
@@ -19,6 +20,11 @@ namespace HouseEX.Persistence
         public IEnumerable<User> GetUsers()
         {
             return context.Users;
+        }
+
+        public IEnumerable<Expense> GetExpenses()
+        {
+            return context.Expenses;
         }
 
     }
